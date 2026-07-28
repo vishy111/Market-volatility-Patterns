@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AAPL Volatility</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .scene-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px auto;
+      display: none;
+    }
+
+    .annotation-box {
+      font-size: 18px;
+      margin: 20px auto;
+      line-height: 1.6;
+      max-width: 900px;
+      background: #f0f4ff;
+      padding: 20px;
+      border-left: 6px solid #1e88e5;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .annotation-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .bb-btn-wrap {
+      position: absolute;
+      top: -10px;
+      right: 0;
+    }
+
+    #annotation3 {
+      position: relative;
+    }
+
+    #bb-info {
+      display: none;
+      background: #f9f3ff;
+      border-left: 6px solid purple;
+      padding: 15px 20px;
+      margin: 15px auto;
+      max-width: 900px;
+      border-radius: 6px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    #legend {
+      margin: 10px auto;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+
+    #tooltip {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      pointer-events: none;
+      font-size: 14px;
+      display: none;
+    }
+
+    #chart {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">Understanding Market Volatility (AAPL)</h1>
+
+  <div id="summary1" class="scene-title" style="display:block;">Scene 1: Tracking AAPL's closing price trend</div>
+  <div id="summary2" class="scene-title">Scene 2: Measuring volatility with SD20</div>
+  <div id="summary3" class="scene-title">Scene 3: Exploring Bollinger Bands</div>
+  <div id="summary4" class="scene-title">Scene 4: Free Exploration Mode</div>
+
+  <div id="annotation1" class="annotation-box" style="display:block;">
+    <ul class="annotation-list">
+      <li>The blue line shows AAPL's closing price over time.</li>
+      <li>In early 2020, the price climbs steadily before dropping sharply during the March 2020 market selloff.</li>
+      <li>This rise-and-fall pattern highlights how quickly market conditions can change.</li>
+      <li>(Hover over the chart to see exact values.)</li>
+    </ul>
+  </div>
+
+  <div id="annotation2" class="annotation-box">
+    <ul class="annotation-list">
+      <li>The orange line (SD20) measures volatility.</li>
+      <li>Volatility stays low during calm periods but spikes sharply during market stress.</li>
+      <li>The mid-March 2020 spike shows how fear and uncertainty can rapidly increase volatility.</li>
+      <li>(Hover over the chart to see exact values.)</li>
+    </ul>
+  </div>
+
+  <div id="annotation3" class="annotation-box">
+    <div class="bb-btn-wrap">
+      <button id="bb-button" class="bb-btn">What's a Bollinger Band?</button>
+    </div>
+    <ul class="annotation-list">
+      <li>The dark red upper band marks unusually high price levels.</li>
+      <li>The dashed maroon lower band marks unusually low price levels.</li>
+      <li>The blue price line is hugging the lower band, meaning prices have been consistently pushed into the low zone.</li>
+      <li>This often signals strong selling pressure or an oversold condition.</li>
+      <li>Oversold conditions can sometimes lead to a bounce, but they also indicate market stress.</li>
+      <li>The width of the bands shows volatility: wide bands mean big swings, narrow bands mean calm periods.</li>
+      <li>(Hover over the chart to see exact values.)</li>
+    </ul>
+  </div>
+
+  <div id="annotation4" class="annotation-box">
+    <ul class="annotation-list">
+      <li>First choose a time range to zoom into the period you care about.</li>
+      <li>Then toggle the close price, volatility, and Bollinger Bands on or off.</li>
+      <li>Each toggle selection redraws the scene.</li>
+      <li>Click Reset View to turn off all toggles and clear the chart.</li>
+      <li>(Hover over the chart to see exact values.)</li>
+    </ul>
+  </div>
+
+  <div id="bb-info">
+    <strong>What's a Bollinger Band?</strong><br><br>
+    <em>Bollinger Bands help traders understand market volatility by showing when prices stretch unusually high or low compared to recent behavior.</em><br><br>
+    <ul class="annotation-list">
+      <li>Upper Band: marks unusually high prices.</li>
+      <li>Lower Band: marks unusually low prices.</li>
+      <li>Middle Band (MA20): a 20-day average used as a reference point.</li>
+      <li>Band width shows volatility - wide means big swings, narrow means calm.</li>
+      <li>Prices touching upper or lower bands help identify extremes.</li>
+    </ul>
+  </div>
+
+  <div id="legend">
+    <div><span style="display:inline-block;width:20px;height:4px;background:steelblue;margin-right:8px;"></span>Close Price</div>
+    <div><span style="display:inline-block;width:20px;height:4px;background:orange;margin-right:8px;"></span>Volatility (SD20)</div>
+    <div><span style="display:inline-block;width:20px;height:4px;background:lightgreen;margin-right:8px;"></span>Middle Band (MA20)</div>
+    <div><span style="display:inline-block;width:20px;height:4px;background:darkred;margin-right:8px;"></span>Upper Band</div>
+    <div><span style="display:inline-block;width:20px;height:0;border-bottom:4px dashed maroon;margin-right:8px;"></span>Lower Band</div>
+  </div>
+
+  <div id="tooltip"></div>
+
+  <div id="chart"></div>
+
+  <div id="controls">
+    <button id="back" class="nav-btn">Back</button>
+    <button id="next" class="nav-btn">Next</button>
+
+    <div id="explore-controls">
+      <label>Time Range:
+        <select id="time-range">
+          <option value="full">Full period</option>
+          <option value="march">March 2020 (2020-03-01 to 2020-03-31)</option>
+          <option value="late-march">Late March 2020 (2020-03-15 to 2020-03-31)</option>
+        </select>
+      </label>
+
+      <label><input type="checkbox" id="show-close"> Close Price</label>
+      <label><input type="checkbox" id="show-bands"> Bollinger Bands</label>
+      <label><input type="checkbox" id="show-volatility"> Volatility (SD20)</label>
+
+      <button id="reset-view" class="nav-btn" style="margin-left:20px;">Reset View</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
