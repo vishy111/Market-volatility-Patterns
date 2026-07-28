@@ -1,0 +1,120 @@
+body 
+{
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  padding: 20px;
+}
+
+h1 
+{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#scene-description 
+{
+  margin-bottom: 10px;
+}
+
+#chart 
+{
+  margin-top: 10px;
+}
+
+#controls 
+{
+  text-align:center;
+  margin-top:30px;
+}
+
+button 
+{
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#explore-controls 
+{
+  display:none;
+  margin-top:20px;
+  text-align:center;
+}
+
+#explore-controls label 
+{
+  margin: 0 12px;
+  font-size: 16px;
+}
+
+#time-range 
+{
+  margin-left: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.nav-btn 
+{
+  background: linear-gradient(135deg, #4a6cf7, #7b3ff2);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 26px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-btn:hover 
+{
+  transform: scale(1.06);
+}
+
+.nav-btn:active 
+{
+  transform: scale(0.94);
+}
+
+.nav-btn.disabled 
+{
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
+
+.tooltip-circle 
+{
+  stroke: white;
+  stroke-width: 2px;
+  fill: black;
+}
+
+.bb-btn 
+{
+  background: purple;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.bb-btn:hover 
+{
+  transform: scale(1.06);
+}
+
+.bb-btn:active 
+{
+  transform: scale(0.94);
+}
+
+.bb-btn.disabled 
+{
+  opacity: 0.45;
+  cursor: default;
+  transform: none;
+}
